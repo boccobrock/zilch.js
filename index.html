@@ -3,21 +3,26 @@
     <head>
         <meta charset="utf-8" />
         <title>Zilch!!!</title>
+        <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.2.0/pure-min.css">
         <!--[if lt IE 9]>
-          <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
         <![endif]-->
     </head>
-    
-    <body>
-		<div id="cursors">
-		</div>
 
-		<canvas id="paper" width="1900" height="1000">
-			Your browser needs to support canvas for this to work!
-		</canvas>
-		
-		<script src="/socket.io/socket.io.js"></script>
-		<script src="http://code.jquery.com/jquery-1.8.0.min.js"></script>
-		<script src="client_zilch.js"></script>
+    <body>
+        <div class="pure-g">
+            <div class="pure-u-1-4" style="background-color:black;">
+                SideNav
+            </div>
+            <div class="pure-u-3-4">
+                <canvas id="paper" width="1900" height="1000">
+                Your browser needs to support canvas for this to work!
+                </canvas>
+            </div>
+        </div>
+
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="http://code.jquery.com/jquery-1.8.0.min.js"></script>
+        <script src="client_zilch.js"></script>
     </body>
 </html>
