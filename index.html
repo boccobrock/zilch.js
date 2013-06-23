@@ -4,6 +4,27 @@
         <meta charset="utf-8" />
         <title>Zilch!!!</title>
         <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.2.0/pure-min.css">
+        <style type="text/css">
+            .pure-button-roll {
+                color: white;
+                border-radius: 4px;
+                text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+                background: rgb(28, 184, 65);
+            }
+            #dice {
+                width: 400px;
+                height: 100px;
+            }
+            .die {
+                display: inline;
+                width: 50px;
+                height: 50px;
+                margin: 0px 10px 0px 10px;
+                border: 2px solid black;
+                text-align: center;
+                vertical-align: center;
+            }
+        </style>
         <!--[if lt IE 9]>
         <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
         <![endif]-->
@@ -15,9 +36,9 @@
                 SideNav
             </div>
             <div class="pure-u-3-4">
-                <canvas id="paper" width="1900" height="1000">
-                Your browser needs to support canvas for this to work!
-                </canvas>
+                <div id="score"></div>
+                <div id="dice"></div>
+                <button id="roll" class="pure-button pure-button-roll">Roll</button>
             </div>
         </div>
 
