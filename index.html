@@ -2,43 +2,45 @@
 <html>
     <head>
         <meta charset="utf-8" />
-        <title>Zilch!!!</title>
+        <title>Zilch</title>
         <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.2.0/pure-min.css">
-        <style type="text/css">
-            .pure-button-roll {
-                color: white;
-                border-radius: 4px;
-                text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
-                background: rgb(28, 184, 65);
-            }
-            #dice {
-                width: 400px;
-                height: 100px;
-            }
-            .die {
-                display: inline;
-                width: 50px;
-                height: 50px;
-                margin: 0px 10px 0px 10px;
-                border: 2px solid black;
-                text-align: center;
-                vertical-align: center;
-            }
-        </style>
-        <!--[if lt IE 9]>
-        <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-        <![endif]-->
+        <link rel="stylesheet" href="style.css">
     </head>
 
     <body>
-        <div class="pure-g">
-            <div class="pure-u-1-4" style="background-color:black;">
-                SideNav
+        <div id="layout" class="pure-g-r">
+            <h1>Zilch</h1>
+            <div id="p1" class="pure-u-1-4">
+                <h3>Player 1</h3>
+                <h2 class="score">Score: </h2>
+                <div class="dice"></div>
+                <h2 class="current">Current: </h2>
+                <button class="pure-button roll">Roll</button>
+                <button class="pure-button save">Save</button>
             </div>
-            <div class="pure-u-3-4">
-                <div id="score"></div>
-                <div id="dice"></div>
-                <button id="roll" class="pure-button pure-button-roll">Roll</button>
+            <div id="p2" class="pure-u-1-4">
+                <h3>Player 2</h3>
+                <h2 class="score">Score: </h2>
+                <div class="dice"></div>
+                <h2 class="current">Current: </h2>
+                <button class="pure-button roll">Roll</button>
+                <button class="pure-button save">Save</button>
+            </div>
+            <div id="p3" class="pure-u-1-4">
+                <h3>Player 3</h3>
+                <h2 class="score">Score: </h2>
+                <div class="dice"></div>
+                <h2 class="current">Current: </h2>
+                <button class="pure-button roll">Roll</button>
+                <button class="pure-button save">Save</button>
+            </div>
+            <div id="p4" class="pure-u-1-4">
+                <h3>Player 4</h3>
+                <h2 class="score">Score: </h2>
+                <div class="dice"></div>
+                <h2 class="current">Current: </h2>
+                <button class="pure-button roll">Roll</button>
+                <button class="pure-button save">Save</button>
             </div>
         </div>
 

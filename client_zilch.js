@@ -4,6 +4,12 @@ $(function(){
 	
 	var clients = {};
 
+    var dice;
+
+    var currentPlayer = 0;
+
+    changeTurn();
+
 	var socket = io.connect(null);
 	
 	socket.on('update', function (data) {
@@ -20,20 +26,27 @@ $(function(){
 
 	var prev = {};
 
-
-    $("#roll").click(function(e){
-        $("#dice").children().remove();
+    $(".roll").click(function(e){
+        $("#p"+currentPlayer+" .dice").children().remove();
         
-        var dice = roll(6);
+        dice = roll(6);
 
         for(i=0;i<6;i++)
-            $("#dice").append("<div class='die'>"+dice[i]+"</div>");
-        $("#score").text(score(dice));
+            $("#p"+currentPlayer+" .dice").append("<div class='die'>"+dice[i]+"</div>");
+        $("#p"+currentPlayer+" .current").text("Current: "+score(dice));
+
+        $("#p"+currentPlayer+" .current").show();
+        $("#p"+currentPlayer+" .save").show();
 
         socket.emit('change',{
             'dice': dice,
             'id': id
         });
+    });
+
+    $(".save").click(function(e){
+        $("#p"+currentPlayer+" .score").text("Score: "+score(dice));
+        changeTurn();
     });
 
     // Remove inactive clients after 10 seconds of inactivity
@@ -89,5 +102,18 @@ $(function(){
             score = 1500;
 
         return score;
+    }
+
+    function changeTurn() {
+        $(".dice").hide();
+        $(".roll").hide();
+        $(".current").hide();
+        $(".save").hide();
+        currentPlayer++;
+        if(currentPlayer > 4)
+            currentPlayer = 1;
+
+        $("#p"+currentPlayer+" .dice").show();
+        $("#p"+currentPlayer+" .roll").show();
     }
 });
