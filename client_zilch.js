@@ -61,6 +61,11 @@ $(function(){
 		}
 	},10000);
 
+    // rules
+    $("#rules-button").click(function(){
+        $("#rules").toggle();
+    });
+
     function roll(num) {
         var dice = [];
         for(i=0; i<num; i++)

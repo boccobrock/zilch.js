@@ -1,11 +1,27 @@
 #layout {
-    padding: 50px;
+    width: 100%;
+    padding: 20px;
+}
+body {
+    background: #fff url('bg.png') repeat-x;
 }
 .roll {
     color: white;
     border-radius: 4px;
     text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
     background: rgb(28, 184, 65);
+}
+.save {
+    color: white;
+    border-radius: 4px;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+    background: rgb(66, 184, 221);
+}
+.rules-button {
+    color: white;
+    border-radius: 4px;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+    background: rgb(223, 117, 20);
 }
 #dice {
     width: 400px;
@@ -19,4 +35,20 @@
     border: 2px solid black;
     text-align: center;
     vertical-align: center;
+}
+#title {
+    letter-spacing: normal; 
+    font-size: 3em;
+    margin-bottom: 15px;
+}
+#rules {
+    display: none;
+    letter-spacing: normal;
+    padding-top: 5px;
+}
+.rules-div {
+    padding-top: 20px;
+}
+#side {
+    float:left;
 }

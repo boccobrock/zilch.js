@@ -1,0 +1,17 @@
+{
+    "name": "zilch.js",
+    "version": "0.1.0",
+    "author": "Jeff Brock boccobrock@gmail.com",
+    "description": "A simple multiplayer game of zilch, a dice game",
+    "dependencies": {
+        "socket.io": "*",
+        "node-static": "*"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/boccobrock/zilch.js.git"
+    },
+    "engines": {
+        "node": ">=0.10"
+    }
+}
