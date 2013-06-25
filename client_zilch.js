@@ -1,11 +1,8 @@
 $(function(){
 	// Generate an unique ID
 	var id = Math.round($.now()*Math.random());
-	
 	var clients = {};
-
     var dice;
-
     var currentPlayer = 0;
 
     changeTurn();
