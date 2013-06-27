@@ -29,7 +29,7 @@ $(function(){
         dice = roll(6);
 
         for(i=0;i<6;i++)
-            $("#p"+currentPlayer+" .dice").append("<div class='die'>"+dice[i]+"</div>");
+            $("#p"+currentPlayer+" .dice").append("<div class='die "+getNumberName(dice[i])+"'></div>");
         $("#p"+currentPlayer+" .current").text("Current: "+score(dice));
 
         $("#p"+currentPlayer+" .current").show();
@@ -117,5 +117,20 @@ $(function(){
 
         $("#p"+currentPlayer+" .dice").show();
         $("#p"+currentPlayer+" .roll").show();
+    }
+
+    function getNumberName(num) {
+        if(num == 1)
+            return "one";
+        if(num == 2)
+            return "two";
+        if(num == 3)
+            return "three";
+        if(num == 4)
+            return "four";
+        if(num == 5)
+            return "five";
+        if(num == 6)
+            return "six";
     }
 });

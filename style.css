@@ -41,15 +41,6 @@ body {
     width: 400px;
     height: 100px;
 }
-.die {
-    display: inline;
-    width: 50px;
-    height: 50px;
-    margin: 0px 10px 0px 10px;
-    border: 2px solid black;
-    text-align: center;
-    vertical-align: center;
-}
 #title {
     letter-spacing: normal; 
     font-size: 3em;
@@ -65,4 +56,83 @@ body {
 }
 #side {
     float:left;
+}
+
+/* CSS Dice: An Experiment by Jonathan Sampson - @jonathansampson, modified by Jeff Brock */
+.die.one:after { 
+    box-shadow: 0 .2em 0 #FFF 
+}
+.die.two:after { 
+    background: transparent;
+    box-shadow: -2.3em -2.3em 0 #345, 
+    2.3em  2.3em 0 #345, 
+    -2.3em -2.3em 0 #FFF, 
+    2.3em  2.4em 0 #FFF 
+}
+.die.three:after { 
+    box-shadow: -2.3em -2.3em 0 #345, 
+    2.3em  2.3em 0 #345, 
+    -2.3em -2.3em 0 #FFF, 
+    2.3em  2.4em 0 #FFF, 
+    0   .2em 0 #FFF 
+}
+.die.four:after { 
+    background: transparent;
+    box-shadow: -2.3em -2.3em 0 #345, 
+    2.3em  2.3em 0 #345, 
+    -2.3em  2.3em 0 #345, 
+    2.3em -2.3em 0 #345, 
+    -2.3em -2.3em 0 #FFF, 
+    2.3em  2.4em 0 #FFF, 
+    -2.3em  2.4em 0 #FFF, 
+    2.3em -2.3em 0 #FFF 
+}
+.die.five:after { 
+    box-shadow: -2.3em -2.3em 0 #345, 
+    2.3em  2.3em 0 #345, 
+    -2.3em  2.3em 0 #345, 
+    2.3em -2.3em 0 #345, 
+    -2.3em -2.2em 0 #FFF, 
+    2.3em -2.2em 0 #FFF, 
+    2.3em  2.4em 0 #FFF, 
+    -2.3em  2.4em 0 #FFF,
+    0   .2em 0 #FFF 
+}
+.die.six:after {
+    background: transparent;
+    box-shadow: -2.3em -2.3em 0 #345,
+    -2.3em      0 0 #345,
+    -2.3em  2.3em 0 #345,
+    2.3em -2.3em 0 #345,
+    2.3em      0 0 #345,
+    2.3em  2.3em 0 #345,
+    -2.3em -2.1em 0 #FFF,
+    -2.3em   .2em 0 #FFF,
+    -2.3em  2.4em 0 #FFF,
+    2.3em  2.4em 0 #FFF,
+    2.3em   .2em 0 #FFF,
+    2.3em -2.1em 0 #FFF
+}
+.die {
+    border-top: 2px solid #f1f1f1;
+    width: 50px; height: 50px;
+    border-radius: 10px;
+    position: relative;
+    margin: 10px;
+    font-size: 6px;
+    display: inline-block;
+    box-shadow: 0px 5px 0 #CCC, 0 6px 3px #444, 0 10px 5px #999;
+    background-color: #fff;
+}
+.die:after {
+    content: "";
+    width: 20%; 
+    height: 20%; 
+    left: 50%; 
+    top: 50%;
+    margin: -10%;
+    background: #345;
+    border-radius: 50%;
+    display: block;
+    position: absolute;
 }
