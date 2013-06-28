@@ -24,12 +24,17 @@ body {
     border-radius: 4px;
     text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
     background: rgb(28, 184, 65);
+    display: none;
 }
 .save {
     color: white;
     border-radius: 4px;
     text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
     background: rgb(66, 184, 221);
+    display: none;
+}
+.current {
+    display: none;
 }
 .rules-button {
     color: white;
@@ -135,4 +140,10 @@ body {
     border-radius: 50%;
     display: block;
     position: absolute;
+}
+.die.selected {
+    background-color: #FFF68F;
+}
+.die.locked {
+    background-color: #FFCC11;
 }

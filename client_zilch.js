@@ -24,16 +24,39 @@ $(function(){
 	var prev = {};
 
     $(".roll").click(function(e){
-        $("#p"+currentPlayer+" .dice").children().remove();
-        
-        dice = roll(6);
+        $(".selected").addClass("locked").removeClass("selected");
 
-        for(i=0;i<6;i++)
-            $("#p"+currentPlayer+" .dice").append("<div class='die "+getNumberName(dice[i])+"'></div>");
-        $("#p"+currentPlayer+" .current").text("Current: "+score(dice));
+        var toroll = $(".die").not(".locked").length;
 
-        $("#p"+currentPlayer+" .current").show();
+        if(toroll == 0)
+            toroll = 6;
+
+        $(".die").not(".locked").remove();
+
+        if($(".locked").length == 6)
+            $(".die").remove();
+
+        dice = roll(toroll);
+
+        for(i=0;i<toroll;i++)
+            $("<div class='die "+getNumberName(dice[i])+"'></div>")
+                .appendTo("#p"+currentPlayer+" .dice")
+                .data("number", dice[i]);
+
         $("#p"+currentPlayer+" .save").show();
+
+        $(".die").not(".locked").click(function(e) {
+            $(this).toggleClass("selected");
+
+            var selected = [], i = 0;
+            $(".selected, .locked").each(function() {
+                selected[i] = $(this).data("number");
+                i++;
+            });
+
+            $("#p"+currentPlayer+" .current").text("Current: "+score(selected));
+            $("#p"+currentPlayer+" .current").show();
+        });
 
         socket.emit('change',{
             'dice': dice,
@@ -107,6 +130,7 @@ $(function(){
     }
 
     function changeTurn() {
+        $("#p"+currentPlayer+" .dice").children().remove();
         $(".dice").hide();
         $(".roll").hide();
         $(".current").hide();
