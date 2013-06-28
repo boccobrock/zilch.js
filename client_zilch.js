@@ -2,7 +2,6 @@ $(function(){
 	// Generate an unique ID
 	var id = Math.round($.now()*Math.random());
 	var clients = {};
-    var dice;
     var currentPlayer = 0;
 
     changeTurn();
@@ -36,12 +35,24 @@ $(function(){
         if($(".locked").length == 6)
             $(".die").remove();
 
-        dice = roll(toroll);
+        var dice = roll(toroll);
 
         for(i=0;i<toroll;i++)
             $("<div class='die "+getNumberName(dice[i])+"'></div>")
                 .appendTo("#p"+currentPlayer+" .dice")
                 .data("number", dice[i]);
+
+        //check for a zilch
+        if(score(dice) == 0) {
+            $("#p"+currentPlayer+" .save").addClass("zilch").removeClass("save").text("Zilch").show();
+            $("#p"+currentPlayer+" .current").text("Zilch!").show();
+
+            $(".zilch").click(function(){
+                $(this).text("Save").removeClass("zilch").addClass("save");
+                changeTurn();
+            });
+            return;
+        }
 
         $("#p"+currentPlayer+" .save").show();
 
@@ -54,8 +65,7 @@ $(function(){
                 i++;
             });
 
-            $("#p"+currentPlayer+" .current").text("Current: "+score(selected));
-            $("#p"+currentPlayer+" .current").show();
+            $("#p"+currentPlayer+" .current").text("Current: "+score(selected)).show();
         });
 
         socket.emit('change',{
@@ -65,8 +75,10 @@ $(function(){
     });
 
     $(".save").click(function(e){
-        $("#p"+currentPlayer+" .score").text("Score: "+score(dice));
-        changeTurn();
+        if(!$(this).hasClass("zilch")) {
+            $("#p"+currentPlayer+" .score").text("Score: "+score(dice));
+            changeTurn();
+        }
     });
 
     // Remove inactive clients after 10 seconds of inactivity
