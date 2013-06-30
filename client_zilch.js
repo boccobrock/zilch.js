@@ -4,6 +4,7 @@ $(function(){
 	var clients = {};
     var currentPlayer = 0;
     var currentSaved = 0;
+    var name = "Tester";
 	var usedDice = {};
 
     changeTurn();
@@ -23,6 +24,25 @@ $(function(){
 	});
 
 	var prev = {};
+
+    $("#message").keypress(function(e){
+        if(e.which == 13) {
+            var message = $(this).val();
+            socket.emit('chat',{
+                'message': message,
+                'player': name,
+                'id': id
+            });
+
+            addMessage(message, name);
+            $(this).val("");
+        }
+    });
+
+	socket.on('chat', function (data) {
+        console.log("recieved");
+        addMessage(data.message, data.player);
+	});
 
     $(".roll").click(function(e){
         if(!$(this).hasClass("disabled")) {
@@ -233,5 +253,9 @@ $(function(){
         for(i=1; i<7; i++)
             if(usedDice[i] != true)
                 $("."+getNumberName(i)).removeClass("selected");
+    }
+
+    function addMessage(message, name) {
+        $("#chat").text($("#chat").text()+"\n"+name+": "+message);
     }
 });

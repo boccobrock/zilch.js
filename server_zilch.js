@@ -16,7 +16,7 @@ function handler (request, response) {
 // io.set('log level', 1);
 
 io.sockets.on('connection', function (socket) {
-    socket.on('change', function (data) {
-        socket.broadcast.emit('update', data);
+    socket.on('chat', function (data) {
+        socket.broadcast.emit('chat', data);
     });
 });
