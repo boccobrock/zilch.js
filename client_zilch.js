@@ -3,6 +3,8 @@ $(function(){
 	var id = Math.round($.now()*Math.random());
 	var clients = {};
     var currentPlayer = 0;
+    var currentSaved = 0;
+	var usedDice = {};
 
     changeTurn();
 
@@ -23,60 +25,76 @@ $(function(){
 	var prev = {};
 
     $(".roll").click(function(e){
-        $(".selected").addClass("locked").removeClass("selected");
+        if(!$(this).hasClass("disabled")) {
 
-        var toroll = $(".die").not(".locked").length;
+            //make unused dice not selected
+            deselectUnused();
 
-        if(toroll == 0)
-            toroll = 6;
+            $(".selected").addClass("locked").removeClass("selected");
 
-        $(".die").not(".locked").remove();
+            var toroll = $(".die").not(".locked").length;
 
-        if($(".locked").length == 6)
-            $(".die").remove();
+            if(toroll == 0)
+                toroll = 6;
 
-        var dice = roll(toroll);
+            currentSaved = getCurrentScore();
 
-        for(i=0;i<toroll;i++)
-            $("<div class='die "+getNumberName(dice[i])+"'></div>")
-                .appendTo("#p"+currentPlayer+" .dice")
-                .data("number", dice[i]);
+            $(".die").not(".locked").remove();
 
-        //check for a zilch
-        if(score(dice) == 0) {
-            $("#p"+currentPlayer+" .save").addClass("zilch").removeClass("save").text("Zilch").show();
-            $("#p"+currentPlayer+" .current").text("Zilch!").show();
+            if($(".locked").length == 6)
+                $(".die").remove();
 
-            $(".zilch").click(function(){
-                $(this).text("Save").removeClass("zilch").addClass("save");
-                changeTurn();
+            var dice = roll(toroll);
+
+            for(i=0;i<toroll;i++)
+                $("<div class='die "+getNumberName(dice[i])+"'></div>")
+                    .appendTo("#p"+currentPlayer+" .dice")
+                    .data("number", dice[i]);
+
+            //check for a zilch
+            if(score(dice) == 0) {
+                zilch();
+                return;
+            }
+
+            $("#p"+currentPlayer+" .save").show();
+            disableRoll();
+            disabledSave();
+
+            $(".die").not(".locked").click(function(e) {
+                $(this).toggleClass("selected");
+
+                var selected = [], i = 0;
+                $(".selected").each(function() {
+                    selected[i] = $(this).data("number");
+                    i++;
+                });
+
+                var newScore = score(selected);
+                if(newScore > 0) {
+                    enableRoll();
+                    enableSave();
+                } else {
+                    disableRoll();
+                    disabledSave();
+                }
+
+                $("#p"+currentPlayer+" .current-label").show();
+                $("#p"+currentPlayer+" .current").text(currentSaved+newScore);
             });
-            return;
+
+            socket.emit('change',{
+                'dice': dice,
+                'id': id
+            });
         }
-
-        $("#p"+currentPlayer+" .save").show();
-
-        $(".die").not(".locked").click(function(e) {
-            $(this).toggleClass("selected");
-
-            var selected = [], i = 0;
-            $(".selected, .locked").each(function() {
-                selected[i] = $(this).data("number");
-                i++;
-            });
-
-            $("#p"+currentPlayer+" .current").text("Current: "+score(selected)).show();
-        });
-
-        socket.emit('change',{
-            'dice': dice,
-            'id': id
-        });
     });
 
     $(".save").click(function(e){
-        if(!$(this).hasClass("zilch")) {
-            $("#p"+currentPlayer+" .score").text("Score: "+score(dice));
+        if(!$(this).hasClass("disabledSave")) {
+            $("#p"+currentPlayer+" .zilch").text("Save").removeClass("zilch").addClass("save");
+            var updatedScore = getTotalScore()+getCurrentScore();
+            $("#p"+currentPlayer+" .score").text(updatedScore);
             changeTurn();
         }
     });
@@ -110,6 +128,7 @@ $(function(){
         var score = 0;
         var doubles = 0;
         var unique = 0;
+        usedDice = {1:true,5:true};
 
         for(i=0; i<dice.length; i++)
             count[dice[i]]++;
@@ -121,6 +140,7 @@ $(function(){
                     score += 1000*(count[i]-2);
                 else
                     score += i*100*(count[i]-2);
+                usedDice[i] = true;
             }
             else if(i == 1)
                 score += count[i]*100;
@@ -133,20 +153,26 @@ $(function(){
                 doubles++;
         }
 
-        if(doubles == 3)
+        if(doubles == 3) {
             score = 1000;
-        if(unique == 6)
+            usedDice = {1:true,2:true,3:true,4:true,5:true,6:true};
+        }
+        if(unique == 6) {
             score = 1500;
+            usedDice = {1:true,2:true,3:true,4:true,5:true,6:true};
+        }
 
         return score;
     }
-
+    
     function changeTurn() {
         $("#p"+currentPlayer+" .dice").children().remove();
         $(".dice").hide();
+        $(".disabled").removeClass("disabled").addClass("roll");
         $(".roll").hide();
-        $(".current").hide();
-        $(".save").hide();
+        $(".current-label").hide();
+        $(".current").text("0");
+        $(".save, .zilch").hide();
         currentPlayer++;
         if(currentPlayer > 4)
             currentPlayer = 1;
@@ -168,5 +194,44 @@ $(function(){
             return "five";
         if(num == 6)
             return "six";
+    }
+
+    function getTotalScore() {
+        return parseInt($("#p"+currentPlayer+" .score").text());
+    }
+
+    function getCurrentScore() {
+        var score = parseInt($("#p"+currentPlayer+" .current").text());
+        if(isNaN(score))
+            return 0;
+        return score;
+    }
+
+    function enableSave() {
+        $(".disabledSave").removeClass("disabledSave").addClass("save");
+    }
+
+    function disabledSave() {
+        $("#p"+currentPlayer+" .save").removeClass("save").addClass("disabledSave");
+    }
+
+    function enableRoll() {
+        $(".disabled").removeClass("disabled").addClass("roll");
+    }
+
+    function disableRoll() {
+        $("#p"+currentPlayer+" .roll").removeClass("roll").addClass("disabled");
+    }
+
+    function zilch() {
+        $("#p"+currentPlayer+" .save").addClass("zilch").removeClass("save").text("Zilch").show();
+        $("#p"+currentPlayer+" .current-label").show();
+        $("#p"+currentPlayer+" .current").text("Zilch!");
+        disableRoll();
+    }
+    function deselectUnused() {
+        for(i=1; i<7; i++)
+            if(usedDice[i] != true)
+                $("."+getNumberName(i)).removeClass("selected");
     }
 });
