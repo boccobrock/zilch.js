@@ -1,13 +1,21 @@
 $(function(){
+    $("#submit-name").click(function() {
+        $("#welcome-box").hide();
+        playZilch($("#name").val());
+    });
+});
+
+function playZilch(name) {
 	// Generate an unique ID
 	var id = Math.round($.now()*Math.random());
 	var clients = {};
     var currentPlayer = 0;
     var currentSaved = 0;
-    var name = "Tester";
 	var usedDice = {};
 
     changeTurn();
+
+    setPlayerName(currentPlayer, name);
 
 	var socket = io.connect(null);
 	
@@ -93,7 +101,10 @@ $(function(){
                 var newScore = score(selected);
                 if(newScore > 0) {
                     enableRoll();
-                    enableSave();
+                    if(getTotalScore() >= 500 || getCurrentScore() >= 500 || currentSaved+newScore >= 500)
+                        enableSave();
+                    else
+                        disabledSave();
                 } else {
                     disableRoll();
                     disabledSave();
@@ -244,6 +255,7 @@ $(function(){
     }
 
     function zilch() {
+        enableSave();
         $("#p"+currentPlayer+" .save").addClass("zilch").removeClass("save").text("Zilch").show();
         $("#p"+currentPlayer+" .current-label").show();
         $("#p"+currentPlayer+" .current").text("Zilch!");
@@ -258,4 +270,8 @@ $(function(){
     function addMessage(message, name) {
         $("#chat").text($("#chat").text()+"\n"+name+": "+message);
     }
-});
+
+    function setPlayerName(id, name) {
+        $("#p"+id+" .name").text(name);
+    }
+}

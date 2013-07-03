@@ -8,10 +8,21 @@
     </head>
 
     <body>
+        <div id="welcome-box">
+            <form class="pure-form pure-form-aligned" onsubmit="return false;">
+                <fieldset>
+                    <legend>Welcome to Zilch!</legend>
+
+                    <label for="name">Name:</label>
+                    <input id="name" type="text" placeholder="Player Name">
+                    <button id="submit-name" type="submit" class="pure-button notice">Start Playing!</button>
+                </fieldset>
+            </form>
+        </div>
         <div id="layout" class="pure-g-r">
             <h1 id="title">Zilch</h1>
             <div id="p1" class="pure-u-1-5">
-                <h3>Player 1</h3>
+                <h3 class="name">Player 1</h3>
                 <h3 class="score-label">Score: <div class="score">0</div> </h3>
                 <button class="pure-button roll">Roll</button>
                 <button class="pure-button save">Save</button>
@@ -19,7 +30,7 @@
                 <h3 class="current-label">Current: <div class="current">0</div> </h3>
             </div>
             <div id="p2" class="pure-u-1-5">
-                <h3>Player 2</h3>
+                <h3 class="name">Player 2</h3>
                 <h3 class="score-label">Score: <div class="score">0</div> </h3>
                 <button class="pure-button roll">Roll</button>
                 <button class="pure-button save">Save</button>
@@ -27,7 +38,7 @@
                 <h3 class="current-label">Current: <div class="current">0</div> </h3>
             </div>
             <div id="p3" class="pure-u-1-5">
-                <h3>Player 3</h3>
+                <h3 class="name">Player 3</h3>
                 <h3 class="score-label">Score: <div class="score">0</div> </h3>
                 <button class="pure-button roll">Roll</button>
                 <button class="pure-button save">Save</button>
@@ -35,7 +46,7 @@
                 <h3 class="current-label">Current: <div class="current">0</div> </h3>
             </div>
             <div id="p4" class="pure-u-1-5">
-                <h3>Player 4</h3>
+                <h3 class="name">Player 4</h3>
                 <h3 class="score-label">Score: <div class="score">0</div> </h3>
                 <button class="pure-button roll">Roll</button>
                 <button class="pure-button save">Save</button>
@@ -43,9 +54,6 @@
                 <h3 class="current-label">Current: <div class="current">0</div> </h3>
             </div>
             <div class="pure-u-1-5">
-                <textarea id="chat" readonly="true">Welcome To Zilch!  You may chat with others here.</textarea>
-                <input id="message"/>
-            </div>
             <button id="rules-button" class="pure-button rules-button">Rules</button>
             <div id="rules">
                 Rules:<br/>
@@ -61,13 +69,21 @@
                 Three 6's = 600<br/>
                 3 Pairs = 1000<br/>
                 Straight = 1500<br/>
-
+                <br/>
                 Each roll must have some value, otherwise it is a zilch and the player loses all their points.<br/>
+                <br/>
                 Setting aside the dice that are being score-labeld, the player may continue to roll the other dice to earn more points.<br/>
+                <br/>
                 If a player rolls the dice and all the dice have value, the player may keep their points and roll all 6 dice again.<br/>
+                <br/>
                 Rolling a zilch at any point causes the player to lose all points earned that turn.<br/>
+                <br/>
                 If a player is not yet on the score-labelboard, they must earn at least 500 points to save their score-label.<br/>
+                <br/>
                 After a player goes above 10000 points, the other players have 1 turn to earn more points, whoever has the most points then wins.<br/>
+            </div>
+                <textarea id="chat" readonly="true">Welcome To Zilch!  You may chat with others here.</textarea>
+                <input id="message"/>
             </div>
         </div>
 

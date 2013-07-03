@@ -69,12 +69,35 @@ body {
     width: 100%;
 }
 #rules {
-    padding-top: 20px;
     display: none;
+    position: absolute;
+    background-color: #fff;
+    border: 2px solid #ccc;
+    top: 10%;
+    left: 30%;
+    width: 600px;
+    height: 500px;
     letter-spacing: normal;
 }
 #side {
     float:left;
+}
+#welcome-box {
+    position: absolute;
+    padding: 15px;
+    background-color: #fff;
+    border: 2px solid #ccc;
+    top: 10%;
+    left: 30%;
+    width: 600px;
+    height: 500px;
+    letter-spacing: normal;
+}
+#submit-name {
+    color: white;
+    border-radius: 4px;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+    background: rgb(28, 184, 65);
 }
 
 /* CSS Dice: An Experiment by Jonathan Sampson - @jonathansampson, modified by Jeff Brock */
